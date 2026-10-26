@@ -1,0 +1,18 @@
+# Swift / SwiftPM
+.build/
+DerivedData/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Built app bundles (produced by build-app.sh / install.sh)
+*.app/
+
+# Downloaded Core ML models (large; fetched by scripts/download-models.sh)
+Models/*
+!Models/README.md
+
+# Spike / app logs (may be written under the repo if run from here)
+*.log
+
+# macOS
+.DS_Store
