@@ -41,8 +41,10 @@ final class SpikeLog: @unchecked Sendable {
     }
 
     func log(_ message: String) {
-        let line = "\(formatter.string(from: Date()))  \(message)"
+        // Format inside the queue: DateFormatter is not thread-safe and log() is
+        // called from the main, session, frame and camera-authorisation threads.
         queue.sync {
+            let line = "\(formatter.string(from: Date()))  \(message)"
             print(line)
             if let data = (line + "\n").data(using: .utf8) {
                 self.handle?.write(data)

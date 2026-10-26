@@ -52,7 +52,7 @@ final class CameraSpike {
         requestAccess { granted in
             if !granted { self.log.log("Camera access denied — grant it in System Settings > Privacy & Security > Camera, then relaunch."); exit(2) }
         }
-        NSWorkspace.shared.notificationCenter.addObserver(
+        _ = NSWorkspace.shared.notificationCenter.addObserver(
             forName: NSWorkspace.screensDidWakeNotification,
             object: nil,
             queue: .main
@@ -64,7 +64,7 @@ final class CameraSpike {
             }
         }
         // Also note sleep, purely for correlating the timeline in the log.
-        NSWorkspace.shared.notificationCenter.addObserver(
+        _ = NSWorkspace.shared.notificationCenter.addObserver(
             forName: NSWorkspace.screensDidSleepNotification,
             object: nil,
             queue: .main
@@ -239,7 +239,7 @@ final class FrameCollector: NSObject, AVCaptureVideoDataOutputSampleBufferDelega
                        frames, fps, ttf, meanLuma, faceChecks, facesSeen))
         if frames == 0 {
             log.log("RESULT: NO frames while screen was locked/asleep — Spike A would be a FAIL on this Mac.")
-        } else if meanLuma < 5 {
+        } else if lumaSamples > 0 && meanLuma < 5 {
             log.log("RESULT: frames arrived but are near-black (meanLuma<5) — camera may be blocked while locked. Inspect.")
         } else {
             log.log("RESULT: usable frames arrived. Record this in docs/spike-results.md (Spike A).")

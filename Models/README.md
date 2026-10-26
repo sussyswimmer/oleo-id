@@ -28,7 +28,11 @@ Notes:
   code in Brief 2/3 must branch on whichever model wins Spike D.
 - A `.mlpackage` is a directory. AuraFace is published in that layout; the
   MobileFaceNet repo stores the three parts as flat `mobilefacenet-*` files, so
-  the download script reconstructs the directory.
+  the download script reconstructs the directory. That reconstruction mirrors
+  AuraFace's known-good layout and the manifest's `com.apple.CoreML/weights`
+  reference, but whether Core ML accepts the rebuilt package can only be
+  confirmed by loading it on the Mac — Spike D's `model` run does exactly that,
+  so a load failure there would show up immediately.
 - The AuraFace card carries an upstream fairness note: training data "may not
   extensively cover all ethnicities." Fine for a single-owner personal app;
   worth remembering if scope ever changes.
